@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+size="$(numfmt --from=iec <%= file_size %>)"
+echo "Filling disk with ${size} of random data..."
+head -c "${size}" </dev/urandom >/var/vcap/store/random-data
+
+echo "Disk filled with random data"
+stat -c %s /var/vcap/store/random-data | numfmt --to=iec
+lsblk
