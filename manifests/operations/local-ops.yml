@@ -1,0 +1,8 @@
+---
+- type: replace
+  path: /releases/name=disk-filler/url
+  value: file://((repo_dir))
+
+- type: replace
+  path: /releases/name=disk-filler/version
+  value: create

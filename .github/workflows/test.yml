@@ -1,0 +1,22 @@
+name: tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches:
+    - main
+    - ci
+
+jobs:
+  test:
+    name: integration-tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Execute tests against local BOSH director
+        uses: s4heid/bosh-action@master
+        with:
+          script: ./ci/test.sh

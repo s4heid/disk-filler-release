@@ -25,9 +25,9 @@ instance_groups:
   - name: fill-disk
     release: disk-filler
     properties:
-      size: 1Gi
+      size: 64M
   vm_type: default
   stemcell: default
-  persistent_disk: 2048
+  persistent_disk: 128
   networks:
   - name: default
