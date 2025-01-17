@@ -3,7 +3,7 @@ name: disk-filler
 
 releases:
 - name: disk-filler
-  version: 0.0.10
+  version: 0.0.1
   url: git+https://github.com/s4heid/disk-filler-release.git
 
 stemcells:
@@ -22,12 +22,12 @@ instance_groups:
   azs: [z1, z2, z3]
   instances: 1
   jobs:
-  - name: disk-filler
+  - name: fill-disk
     release: disk-filler
     properties:
       size: 1Gi
   vm_type: default
   stemcell: default
-  persistent_disk: 10240
+  persistent_disk: 2048
   networks:
   - name: default

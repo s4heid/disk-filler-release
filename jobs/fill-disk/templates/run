@@ -2,7 +2,7 @@
 
 set -e
 
-size="$(numfmt --from=iec <%= file_size %>)"
+size="$(numfmt --from=iec <%= properties.size %>)"
 echo "Filling disk with ${size} of random data..."
 head -c "${size}" </dev/urandom >/var/vcap/store/random-data
 

@@ -10,5 +10,5 @@ packages: []
 
 properties:
   size:
-    description: "The disk space to fill with random data in IEC format. For example, '100Ki' or '3Mi' or '1Gi'."
-    default: "100Mi"
+    description: "The disk space to fill with random data in IEC format. For example, '100K' or '3M' or '1G'."
+    default: "100M"
