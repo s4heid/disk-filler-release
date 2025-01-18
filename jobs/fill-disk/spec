@@ -10,5 +10,8 @@ packages: []
 
 properties:
   size:
-    description: "The disk space to fill with random data in IEC format. For example, '100K' or '3M' or '1G'."
-    default: "100M"
+    description: "The disk space to fill with random data. For example, '3MB' or '1GB', or '1GiB'."
+    default: "100MiB"
+  allocate_only:
+    description: "If true, only allocate the disk space without writing any data."
+    default: true

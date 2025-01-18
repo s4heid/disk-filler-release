@@ -4,11 +4,16 @@ This BOSH release provides a job for filling disk space on a persistent disk, wh
 
 ## Usage
 
+Create release
+
+```sh
+bosh create-release --version=0.0.1 --tarball=/tmp/df-release.tgz
+```
+
 Upload the release to the BOSH director:
 
 ```sh
-bosh upload-release --name=disk-filler --version=0.0.1 \
-    git+https://github.com/s4heid/disk-filler-release
+bosh upload-release --name=disk-filler --version=0.0.1 /tmp/df-release.tgz
 ```
 
 Deploy the release:

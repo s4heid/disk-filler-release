@@ -3,7 +3,7 @@ name: disk-filler
 
 releases:
 - name: disk-filler
-  version: 0.0.1
+  version: create
   url: git+https://github.com/s4heid/disk-filler-release.git
 
 stemcells:
@@ -25,7 +25,7 @@ instance_groups:
   - name: fill-disk
     release: disk-filler
     properties:
-      size: 1Gi
+      size: 1GiB
   vm_type: default
   stemcell: default
   persistent_disk: 2048

@@ -2,10 +2,19 @@
 
 set -e
 
-size="$(numfmt --from=iec <%= properties.size %>)"
-echo "Filling disk with ${size} of random data..."
-head -c "${size}" </dev/urandom >/var/vcap/store/random-data
+size="<%= properties.size %>"
+allocate_only="<%= properties.allocate_only %>"
+mount_point="/var/vcap/store"
+file_name="random-data"
 
-echo "Disk filled with random data"
-stat -c %s /var/vcap/store/random-data | numfmt --to=iec
-lsblk
+if [[ "$allocate_only" == "true" ]]; then
+    echo " > Allocating ${size} of disk space"
+    fallocate -l "${size}" "${mount_point}/${file_name}"
+else
+    echo " > Filling disk with ${size} of random data"
+    head -c "${size}" </dev/urandom >"${mount_point}/${file_name}"
+fi
+
+actual_size="$(stat -c %s "${mount_point}/${file_name}" | numfmt --to=iec)"
+echo " > Allocated $(actual_size) disk space"
+df -h "${mount_point}"
