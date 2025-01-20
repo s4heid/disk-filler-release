@@ -16,5 +16,5 @@ else
 fi
 
 actual_size="$(stat -c %s "${mount_point}/${file_name}" | numfmt --to=iec)"
-echo " > Allocated $(actual_size) disk space"
+echo " > Allocated ${actual_size} disk space"
 df -h "${mount_point}"
