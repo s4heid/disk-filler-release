@@ -7,6 +7,14 @@ allocate_only="<%= properties.allocate_only %>"
 mount_point="/var/vcap/store"
 file_name="random-data"
 
+available_space_bytes=$(df -B1 --output=avail "${mount_point}" | tail -1 | xargs)
+specified_size_bytes=$(echo "${size%B}" | numfmt --from=iec-i)
+
+if [[ "${specified_size_bytes}" -gt "${available_space_bytes}" ]]; then
+    echo "Warning: Specified size ${specified_size_bytes} is larger than the available space ${available_space_bytes} in ${mount_point}."
+    exit 0
+fi
+
 if [[ "$allocate_only" == "true" ]]; then
     echo " > Allocating ${size} of disk space"
     fallocate -l "${size}" "${mount_point}/${file_name}"
@@ -15,6 +23,4 @@ else
     head -c "${size}" </dev/urandom >"${mount_point}/${file_name}"
 fi
 
-actual_size="$(stat -c %s "${mount_point}/${file_name}" | numfmt --to=iec)"
-echo " > Allocated ${actual_size} disk space"
 df -h "${mount_point}"
