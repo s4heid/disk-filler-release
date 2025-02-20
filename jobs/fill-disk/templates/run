@@ -7,8 +7,16 @@ allocate_only="<%= properties.allocate_only %>"
 mount_point="/var/vcap/store"
 file_name="random-data"
 
+if [[ "${size}" =~ [0-9]+[KMGTP]i[B]?$ ]]; then
+    format="iec-i"
+elif [[ "${size}" =~ [0-9]+[KMGTP][B]?$ ]]; then
+    format="si"
+else
+    echo "Error: Invalid size format. Please use a valid size format (e.g. 1KB, 1MB, 1GB, 1TB, 1PB, 1KiB, 1MiB, 1GiB, 1TiB, 1PiB)."
+    exit 1
+fi
+specified_size_bytes=$(echo "${size%B}" | numfmt --from="${format}")
 available_space_bytes=$(df -B1 --output=avail "${mount_point}" | tail -1 | xargs)
-specified_size_bytes=$(echo "${size%B}" | numfmt --from=iec-i)
 
 if [[ "${specified_size_bytes}" -gt "${available_space_bytes}" ]]; then
     echo "Warning: Specified size ${specified_size_bytes} is larger than the available space ${available_space_bytes} in ${mount_point}."
